@@ -1,0 +1,40 @@
+HPA: HPA stands for Horizontal Pod Autoscaler, it basically autoscales (scales us and scales down based on the load on the application)
+
+Kubernetes commands for HPA:
+
+1. kubectl autoscale deployment <Deployment_name> --cpu-percent=20 --min=1 --max=10
+
+exmple if your deployment name is hpa-test
+
+kubectl autoscale deployment hpa-test --cpu-percent=20 --min=1 --max=10
+
+To  create service for your application:
+
+1. kubectl expose deployment <Deployment_name> --type=NodePort --port=80
+
+ exmple if your deployment name is hpa-test
+
+kubectl expose deployment hpa-test --type=NodePort --port=80
+
+Also you need to install a metrics server 
+
+Steps for Horizontal Pod Autoscaling:
+ 
+1	Install a metrics server in your cluster ( https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml)
+1	Now, in the components.yaml add the parameter --kubelet-insecure-tls under deployment (this is done basically to avoid installation of additional certificates.)
+1	Now, create a deployment file and then apply it on the cluster
+1	Now, expose the application under your deployment using services
+1	Now, create the HPA using command like, kubectl autoscale deployment depl --cpu-percent=20 --min=1 --max=10 this will create an HPA on the deployment object and now to see the HPA in action increase the load by making 10000 requests to the exposed application and witness the HPA in action.
+
+Kubectl get hpa -w (to check the current status of the HPA)
+ 
+To increase the load on the application you can open another terminal and increase the load on the application like below:
+for ((i=1;i<=10000;i++)); do curl  -I -k "http://127.0.0.1:50394”; done
+ 
+Once you have done this you will be able to see that the load increases on the application.
+ 
+After sometime you will be able to see that as the load reduces the pods that were created would be scaled down automatically.
+ 
+Also the HPA would be applied to only objects such as Deployment, ReplicaSet, Controller etc
+ 
+The component.yaml file is already provided here.
