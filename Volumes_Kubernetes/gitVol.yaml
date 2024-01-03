@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name : gitvol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name : gitvolumes
+  template:
+    metadata:
+      name: gitvol
+      labels:
+        name: gitvolumes 
+    spec:
+      containers:
+       - name: httpd
+         image: httpd
+         volumeMounts:
+           - name: git-vol
+             mountPath: /var/usr/text
+      volumes:
+       - name: git-vol
+         gitRepo:
+           repository: "https://github.com/Kumar-sanchit/kubernetes_volume.git"
+         
+
+

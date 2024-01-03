@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hpa-test
+spec:
+  replicas: 2
+  selector: 
+    matchLabels: 
+      name: test-hpa
+  template:
+    metadata:
+      name: hpa-test
+      labels:
+        name: test-hpa
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+        - containerPort: 80
+        resources:
+         requests:
+           #cpu: 100
+           memory: 100Mi
+         limits:
+           #cpu: 200
+           memory: 200Mi
+         

@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: pod1
+  annotations: 
+    description: Hello there this is pod1
+  labels:
+    env: development
+    class: pod
+spec:
+  containers: 
+    - name: container1
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello From Container1; sleep 5; done;"]
+      env: 
+       - name: Env
+         value: Development
+       - name: class
+         value: Pod

@@ -1,0 +1,29 @@
+#If limit is not defined and only request is defined then the resource allocated to the pod would be from the available resource Quota (from the default range of the namespace).
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: limit-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: limit-test
+  template:
+    metadata:
+      name: test
+      labels:
+        name: limit-test
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 1000Mi
+              memory: 1Gi
+            limits:
+              #cpu: 2000Mi
+              #memory: 500M
+

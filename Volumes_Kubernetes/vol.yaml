@@ -1,0 +1,28 @@
+#emptyDir nothing would be preserved once pod is killed then new pod will come up and it will not have the work done by the previous pod.
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+ name : voltest
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      name : testvol
+  template:
+    metadata:
+      labels: 
+        name : testvol
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          ports:
+           - containerPort: 80
+          volumeMounts:
+           - mountPath: /tmp/mount/dir
+             name: testvol
+      volumes:
+       - name: testvol
+         emptyDir: {}
+
+

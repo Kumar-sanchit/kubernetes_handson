@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod1
+  annotations: 
+    description: My new Testpod 2 where we can expose port
+spec:
+  containers:
+    - name : cont1
+      image : httpd
+      ports:
+        - containerPort: 80
+      env:
+       - name: myName
+         value: Sanchit

@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: testing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: testing
+  template:
+    metadata:
+      labels:
+        name : testing
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          ports:
+           - containerPort: 80
+          resources:
+            limits:
+              cpu: 1M
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 500Mi

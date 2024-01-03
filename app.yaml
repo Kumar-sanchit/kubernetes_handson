@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod
+  annotations:  
+    description: This is testpod which is getting created. 
+spec:
+  containers:
+   - name: c00
+     image: ubuntu
+     command: ["/bin/bash", "-c", "while true; do echo Hello From Container1; sleep 5; done;"]
+     env:
+      - name: USER_NAME
+        value: Sanchit
+      - name: ENV
+        value: DEV
+   - name: c01
+     image: ubuntu
+     command: ["/bin/bash", "-c", "while true; do echo Hello From Container2; sleep 5; done;"]
+   - name: c02
+     image: ubuntu
+     command: ["/bin/bash", "-c", "while true; do echo Hello From Container3; sleep 5; done;"]

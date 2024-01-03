@@ -1,0 +1,27 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: vol-hostpath
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      name: hostpath
+  template:
+    metadata: 
+      name: vol-hostpath
+      labels: 
+        name: hostpath
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          volumeMounts:
+            - name: pathvol
+              mountPath: /data/hostpath
+      volumes:
+        - name: pathvol
+          hostPath:
+            path: /data
+             
+

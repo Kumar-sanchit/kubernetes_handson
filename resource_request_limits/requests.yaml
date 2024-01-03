@@ -1,0 +1,28 @@
+#when the limit is defined and request is not defined then request=limit
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: resource-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: resources-testing
+  template:
+    metadata:
+      name: resource-test
+      labels:
+        name: resources-testing
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        ports:
+         - containerPort: 80
+        resources:
+          requests:
+            #cpu: 500Mi
+            #memory: 100M
+          limits:
+            cpu: 10Mi
+            memory: 200M
