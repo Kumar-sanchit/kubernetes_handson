@@ -1,0 +1,38 @@
+#kubectl create configmap map --from-file=abc.conf
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: configmapdeploymnt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: config-test
+  template:
+    metadata:
+      name: configmapdeploymnt
+      labels:
+        name: config-test
+    spec:
+      containers:
+       - name: httpd
+         image: httpd
+         volumeMounts:
+           - name: configmap
+             mountPath: /tmp/help
+         resources:
+          requests:
+            cpu: 0.5
+            memory: 1Mi
+          limits:
+            cpu: 0.5
+            memory: 200Mi
+      volumes:
+        - name: configmap
+          configMap:
+            name: map  # name of the config created 
+            items:
+            - path: abc.conf
+              key:  abc.conf
+
+  

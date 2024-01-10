@@ -1,0 +1,26 @@
+#kubectl create configmap abc --from-file=abc.conf
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deploy-env
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deployment-env
+  template:
+    metadata:
+      name: deploy-env
+      labels: 
+        name: deployment-env
+    spec:
+      containers:
+      - name: httpd
+        image: httpd
+        env:
+        - name: myenv
+          valueFrom:
+            configMapKeyRef:
+              name: abc  # name of the config created 
+              key: abc.conf
+
